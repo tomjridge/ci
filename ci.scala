@@ -20,6 +20,14 @@ val gh = sibylfs_src
 // val all_out = tmp()
 
 
+def git_clone(s:String) = {
+  // val td = tmp.dir()
+  // make sure .git is not picked up by nix
+  val x = %%("git","clone","--depth=1",s)
+  %%("bash","-c","rm -rf */.git")
+  x
+}
+
 def make(gh:Gh_project) = {
 
   println(gh)
@@ -29,14 +37,13 @@ def make(gh:Gh_project) = {
   cd! dir
   println("In directory: "+dir)
 
-  val gc = %%("git","clone",s"${gh.url}")
+  val gc = git_clone(s"${gh.url}")
 
   val gd = %%("bash","-c",gh.make)(dir)
 
   println(gc.out.string+gc.err.string+gd.out.string+gd.err.string)
 
 }
-
 
 def make_e3_p3() = {
 
@@ -48,11 +55,11 @@ def make_e3_p3() = {
   {
     val e3 = s"$gh0/tomjridge/e3.git"
 
-    val gc1 = %%("git","clone",e3)
+    val gc1 = git_clone(e3)
 
     val p3 = s"$gh0/tomjridge/p3.git"
 
-    val gc = %%("git","clone",p3)
+    val gc = git_clone(p3)
 
     val gd = %%("bash","-c","cd p3 && nix-build")(dir)
 
@@ -78,15 +85,15 @@ def make_e3_p4() = {
   {
     val p1 = s"$gh0/tomjridge/p1.git"
 
-    val gc2 = %%("git","clone",p1)
+    val gc2 = git_clone(p1)
 
     val e3 = s"$gh0/tomjridge/e3.git"
 
-    val gc1 = %%("git","clone",e3)
+    val gc1 = git_clone(e3)
 
     val p4 = s"$gh0/tomjridge/p4.git"
 
-    val gc = %%("git","clone",p4)
+    val gc = git_clone(p4)
 
     val gd = %%("bash","-c","cd p4 && nix-build")(dir)
 
