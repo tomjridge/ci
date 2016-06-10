@@ -119,10 +119,12 @@ println("Start")
 //   val y = Future { make(sibylfs_src)}
 //   Await.result(y,Duration.Inf)
 }
-//make(sibylfs_src)
-//make(Gh_project(url=s"$gh0/tomjridge/p1.git",make="cd p1 && nix-build"))
 
 try {
+  make(sibylfs_src)
+
+  make(Gh_project(url=s"$gh0/tomjridge/p1.git",make="cd p1 && nix-build")) // FIXME keeps on being rebuilt; this seems to happen on every new checkout;
+
   make(Gh_project(url=s"$gh0/tomjridge/e3.git",make="cd e3 && nix-build"))
   // make_e3_p3 not working 2016-06-10
   // make_e3_p4 not working 2016-06-10
