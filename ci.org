@@ -1,0 +1,9 @@
+  - sibylfs
+    - scala script using ammonite, that runs make, and if return code
+      is OK, then success
+      - should checkout and build master, using .nix
+        - X
+      - also build with different ocaml versions? look at nix support
+        for this
+        -
+
