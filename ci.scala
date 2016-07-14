@@ -10,11 +10,11 @@ println(shellSession)
 import ammonite.ops._
 // import ammonite.ops.ImplicitWd._
 
-case class Gh_project(url:String,make:String="cd .nix && nix-build")
+case class Git_project(url:String,make:String="cd .nix && nix-build")
 
 val gh0 = "https://github.com"
 
-val sibylfs_src = Gh_project(url= s"$gh0/sibylfs/sibylfs_src.git",make="cd sibylfs_src && nix-build")
+val sibylfs_src = Git_project(url= s"$gh0/sibylfs/sibylfs_src.git",make="cd sibylfs_src && git checkout 2016-07-14_fix_nix && nix-build")
 val gh = sibylfs_src
 
 // val all_out = tmp()
@@ -28,7 +28,7 @@ def git_clone(s:String) = {
   x
 }
 
-def make(gh:Gh_project) = {
+def make(gh:Git_project) = {
 
   println(gh)
 
@@ -118,9 +118,9 @@ println("Start")
 // 
 //   val x = List(
 //     Future { make(sibylfs_src)}
-//   //   Future { make(Gh_project(url=s"$gh0/tomjridge/p1.git",make="cd p1 && make"))},
-//   //   Future { make(Gh_project(url=s"$gh0/tomjridge/p3.git",make="cd p3 && make"))},
-//   //   Future { make(Gh_project(url=s"$gh0/tomjridge/p4.git",make="cd p4 && make"))}
+//   //   Future { make(Git_project(url=s"$gh0/tomjridge/p1.git",make="cd p1 && make"))},
+//   //   Future { make(Git_project(url=s"$gh0/tomjridge/p3.git",make="cd p3 && make"))},
+//   //   Future { make(Git_project(url=s"$gh0/tomjridge/p4.git",make="cd p4 && make"))}
 //   )
 //   println("ab")
 //   val y = Future { make(sibylfs_src)}
@@ -130,10 +130,15 @@ println("Start")
 try {
   make(sibylfs_src)
 
-  make(Gh_project(url=s"$gh0/tomjridge/p1.git",make="cd p1 && nix-build")) // FIXME keeps on being rebuilt; this seems to happen on every new checkout;
+  make(Git_project(url=s"$gh0/tomjridge/p1.git",make="cd p1 && nix-build")) // FIXME keeps on being rebuilt; this seems to happen on every new checkout;
 
-  make(Gh_project(url=s"$gh0/tomjridge/e3.git",make="cd e3 && nix-build"))
-  make(Gh_project(url=s"$gh0/tomjridge/simple_earley.git",make="cd simple_earley && nix-build"))
+  make(Git_project(url=s"$gh0/tomjridge/e3.git",make="cd e3 && nix-build"))
+
+  make(Git_project(
+    url=s"$gh0/tomjridge/simple_earley.git",
+    make="cd simple_earley && nix-build"))
+
+  make(Git_project(url=s"/tmp/l/scala_btree",make="cd scala_btree && nix-build"))
   // make_e3_p3 not working 2016-06-10
   // make_e3_p4 not working 2016-06-10
 
