@@ -10,11 +10,11 @@ println(shellSession)
 import ammonite.ops._
 // import ammonite.ops.ImplicitWd._
 
-case class Git_project(url:String,make:String="cd .nix && nix-build")
+case class Git_project(url:String,clone_args:String="",make:String="cd .nix && nix-build")
 
 val gh0 = "https://github.com"
 
-val sibylfs_src = Git_project(url= s"$gh0/sibylfs/sibylfs_src.git",make="cd sibylfs_src && git checkout 2016-07-14_fix_nix && nix-build")
+val sibylfs_src = Git_project(url= s"$gh0/sibylfs/sibylfs_src.git --branch 2016-07-14_fix_nix",make="cd sibylfs_src && nix-build")
 val gh = sibylfs_src
 
 // val all_out = tmp()
@@ -23,7 +23,7 @@ val gh = sibylfs_src
 def git_clone(s:String) = {
   // val td = tmp.dir()
   // make sure .git is not picked up by nix
-  val x = %%("git","clone","--depth=1",s)
+  val x = %%("git","clone","--depth=1",s.split(' ').toList)
   %%("bash","-c","rm -rf */.git")
   x
 }
