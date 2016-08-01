@@ -10,6 +10,8 @@ println(shellSession)
 import ammonite.ops._
 // import ammonite.ops.ImplicitWd._
 
+
+
 case class Git_project(url:String,clone_args:String="",make:String="cd .nix && nix-build")
 
 val gh0 = "https://github.com"

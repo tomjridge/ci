@@ -12,3 +12,23 @@
 
   - run as nightly job
     -
+
+
+
+
+  - use nix-build --option build-use-chroot true 
+    - unfortunately this seems to require being run as root?
+      - run in chroot for now
+
+
+
+nix.useChroot = true
+
+build-use-sandbox
+
+nix-build --option build-use-chroot true 
+
+
+
+proot can chroot and bind /proc etc at the same time
+
