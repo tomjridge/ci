@@ -32,3 +32,6 @@ nix-build --option build-use-chroot true
 
 proot can chroot and bind /proc etc at the same time
 
+
+  - we need to also include emacs, ocaml env, etc; or at least
+    checkpoint the state of theseopam
